@@ -2,6 +2,7 @@
 module WebParts
 
 open Suave
+open Suave.Utils.Collections
 
 let random (parts: WebPart list) (x: HttpContext) =
     let rng = System.Random()  
@@ -28,3 +29,13 @@ let private addContentInternal bytes : WebPart =
         async.Return (Some newContext)
 
 let say text = addContentInternal (UTF8.bytes text)
+
+let file filePath =
+    let content = System.IO.File.ReadLines(filePath) |> Seq.fold (+) ""
+    let contentBytes = UTF8.bytes content
+    fun context ->
+        let newHeaders = ("Content-Type", "text/css") :: context.response.headers
+        let newContext = {
+            context with response = { context.response with status = HTTP_200.status; content = Bytes contentBytes; headers = newHeaders }
+        }
+        async.Return (Some newContext)
