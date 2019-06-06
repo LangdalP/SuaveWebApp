@@ -16,7 +16,7 @@ let app =
   choose
     [ GET >=> choose
         [ path "/" >=> OK "Index pindex"
-          path "/public/css/style.css" >=> WebParts.file "./public/css/style.css"
+          path "/public/css/style.css" >=> WebParts.file "./public/css/style.css" "text/css"
           path "/hello" >=> OK "Hello GET"
           pathScan "/template/%s" (fun x -> page "index.liquid" { text = "Hello, " + x })
           path "/append" >=> WebParts.say "Heisann" >=> WebParts.say " sveisann!"

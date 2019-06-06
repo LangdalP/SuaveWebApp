@@ -30,11 +30,11 @@ let private addContentInternal bytes : WebPart =
 
 let say text = addContentInternal (UTF8.bytes text)
 
-let file filePath =
+let file filePath mediaType =
     let content = System.IO.File.ReadLines(filePath) |> Seq.fold (+) ""
     let contentBytes = UTF8.bytes content
     fun context ->
-        let newHeaders = ("Content-Type", "text/css") :: context.response.headers
+        let newHeaders = ("Content-Type", mediaType) :: context.response.headers
         let newContext = {
             context with response = { context.response with status = HTTP_200.status; content = Bytes contentBytes; headers = newHeaders }
         }
