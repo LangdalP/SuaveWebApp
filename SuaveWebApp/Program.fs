@@ -7,25 +7,18 @@ open Suave.Operators
 open Suave.Successful
 
 open Suave.DotLiquid
-open DotLiquid
-open Suave.Files
 
 type Model = { text : string }
 
 let app =
   choose
     [ GET >=> choose
-        [ path "/" >=> OK "Index pindex"
-          path "/public/css/style.css" >=> WebParts.file "./public/css/style.css" "text/css"
-          path "/hello" >=> OK "Hello GET"
-          pathScan "/template/%s" (fun x -> page "index.liquid" { text = "Hello, " + x })
-          path "/append" >=> WebParts.say "Heisann" >=> WebParts.say " sveisann!"
-          pathScan "/yo/%s/%s" (fun (x, y) -> OK (sprintf "Yo %s u r %s but enough about that what u doin?" x y))
-          pathScan "/yo/%s" ((sprintf "Yo %s what u doin?") >> OK) // 2. parameter til pathScan er ekvivalent med (fun a -> OK (a |> sprintf "Yo %s what u doin?"))
-          path "/goodbye" >=> OK "Good bye GET" ]
+        [ path "/" >=> page "index.liquid" { text = "You have reached the index page" }
+          path "/test" >=> OK "You have reached the /test page"
+          pathScan "/test/%s/%s" (fun (x, y) -> OK (sprintf "You have reached the test page with the path parameters %s and %s" x y))
+          path "/public/css/style.css" >=> WebParts.file "./public/css/style.css" "text/css" ]
       POST >=> choose
-        [ path "/hello" >=> OK "Hello POST"
-          path "/goodbye" >=> OK "Good bye POST" ] ]
+        [ path "/test" >=> OK "You have reached the /test page with a POST" ] ]
 
 [<EntryPoint>]
 let main argv =

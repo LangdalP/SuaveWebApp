@@ -2,10 +2,13 @@
 <html lang="en">
   <head>
     {% include 'includes/head_tags.html' %}
-    <title>My First Page</title>
+    <title>Hello, World</title>
   </head>
   <body>
-  {% include 'includes/paragraph.liquid' %}
-  {% include 'includes/footer.html' %}
+    <main class="autoMargin wide">
+      <h1>Hello, World</h1>
+      <p>{{ model.text }}</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec quis arcu interdum, lacinia elit eget, ornare metus. Nullam nec orci commodo, fermentum dui sit amet, eleifend lacus. Quisque a augue mattis, consequat dolor ac, congue lorem. Mauris finibus eu leo at pellentesque. Pellentesque suscipit dolor nibh. In dignissim laoreet neque eget ornare. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et iaculis tortor. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nam vitae facilisis libero, nec laoreet justo. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+    </main>
   </body>
 </html>
